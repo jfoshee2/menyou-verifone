@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MenYou</string>
+    <string name="text_hint_name">Item Name</string>
+    <string name="text_hint_ingredients">Item Ingredients</string>
+    <string name="text_hint_price">Item Price</string>
+    <string name="text_hint_calories">Item Calories</string>
+</resources>
