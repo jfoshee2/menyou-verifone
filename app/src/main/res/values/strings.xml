@@ -4,4 +4,9 @@
     <string name="text_hint_ingredients">Item Ingredients</string>
     <string name="text_hint_price">Item Price</string>
     <string name="text_hint_calories">Item Calories</string>
+
+    <string-array name="menu_item_options">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
 </resources>

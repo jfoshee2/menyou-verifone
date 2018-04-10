@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.james.menyou_verifone.ApplicationComponent;
+import com.example.james.menyou_verifone.DaggerApplicationComponent;
 import com.example.james.menyou_verifone.MainActivity;
 import com.example.james.menyou_verifone.R;
 
@@ -47,44 +49,27 @@ public class CreateMenuItemActivity extends AppCompatActivity {
 
         Button createButton = findViewById(R.id.itemCreateButton);
 
-        createButton.setOnClickListener(new View.OnClickListener() {
+        createButton.setOnClickListener(view -> {
 
-            @Override
-            public void onClick(View view) {
+            String[] ingredientParts = ingredients.getText().toString().split(" ");
+            List<String> itemIngredients = Arrays.asList(ingredientParts);
 
-                String[] ingredientParts = ingredients.getText().toString().split(" ");
-                List<String> itemIngredients = Arrays.asList(ingredientParts);
+            MenuItem item = new MenuItem(name.getText() + "",
+                    itemIngredients,
+                    Double.parseDouble(price.getText() + ""),
+                    Integer.parseInt(calories.getText() + "")
+            );
 
-                MenuItem item = new MenuItem(name.getText() + "",
-                        itemIngredients,
-                        Double.parseDouble(price.getText() + ""),
-                        Integer.parseInt(calories.getText() + "")
-                );
+            ApplicationComponent applicationComponent = DaggerApplicationComponent
+                    .builder()
+                    .build();
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://menyou-sp.appspot.com/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+            MenuItemRestAdapter menuItemRestAdapter = applicationComponent
+                    .getMenuItemRestAdapter();
 
-                MenuItemClient client = retrofit.create(MenuItemClient.class);
+            menuItemRestAdapter.createMenuItem(item);
 
-                Call<MenuItem> call = client.createMenuItem(item);
-
-                call.enqueue(new Callback<MenuItem>() {
-                    @Override
-                    public void onResponse(Call<MenuItem> call, Response<MenuItem> response) {
-                        startActivity(main);
-                    }
-
-                    @Override
-                    public void onFailure(Call<MenuItem> call, Throwable t) {
-                        Toast.makeText(CreateMenuItemActivity.this,
-                                "Error",
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                });
-            }
+            startActivity(main);
         });
 
     }
