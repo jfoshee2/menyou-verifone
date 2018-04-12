@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.example.james.menyou_verifone.item.CreateMenuItemActivity;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-                    ListView menuListView = findViewById(R.id.menuListView);
+                    GridView menuListView = findViewById(R.id.GridViewID);
 
                     menuListView.setAdapter(new MenuItemAdapter(MainActivity.this, list));
                     menuListView.setOnItemClickListener((adapterView, view, i, l) -> {
