@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.james.menyou_verifone.item.CreateMenuItemActivity;
 import com.example.james.menyou_verifone.item.MenuItem;
 import com.example.james.menyou_verifone.item.MenuItemAdapter;
 import com.example.james.menyou_verifone.item.MenuItemDetailActivity;
 import com.example.james.menyou_verifone.item.MenuItemRestAdapter;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -21,6 +23,10 @@ public class MainActivity extends Activity {
     private Intent itemDetailIntent;
     private Intent createItemIntent;
 
+    private GridView menuGridView;
+
+    private MenuItemRestAdapter menuItemRestAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,29 +35,55 @@ public class MainActivity extends Activity {
         itemDetailIntent = new Intent(this, MenuItemDetailActivity.class);
         createItemIntent = new Intent(this, CreateMenuItemActivity.class);
 
-        FloatingActionButton createNewItemButton = findViewById(R.id.fab);
-
-        createNewItemButton.setOnClickListener(view -> startActivity(createItemIntent));
+        menuGridView = findViewById(R.id.grid_view);
 
         ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
-        MenuItemRestAdapter menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
+        menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
+
+
+        SearchView searchView = findViewById(R.id.search);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                menuItemRestAdapter.searchForMenuItems(s)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(list -> adaptListView(list));
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false; // TODO: Implement Suggest feature
+            }
+        });
 
         menuItemRestAdapter.getAllMenuItems()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    GridView menuListView = findViewById(R.id.GridViewID);
+                .subscribe(this::adaptListView);
 
-                    menuListView.setAdapter(new MenuItemAdapter(MainActivity.this, list));
-                    menuListView.setOnItemClickListener((adapterView, view, i, l) -> {
-                        MenuItem menuItem = (MenuItem) adapterView.getItemAtPosition(i);
+        FloatingActionButton createNewItemButton = findViewById(R.id.fab);
 
-                        itemDetailIntent.putExtra("detailName", menuItem.getName());
-                        itemDetailIntent.putExtra("detailPrice", menuItem.getPrice());
-                        itemDetailIntent.putExtra("detailCalories", menuItem.getCalories());
+        createNewItemButton.setOnClickListener(view -> startActivity(createItemIntent));
+    }
 
-                        startActivity(itemDetailIntent);
-                    });
-                });
+    private void adaptListView(List<MenuItem> list) {
+
+        GridView menuGridView = findViewById(R.id.grid_view);
+
+        menuGridView.setAdapter(new MenuItemAdapter(MainActivity.this, list));
+        menuGridView.setOnItemClickListener((adapterView, view, i, l) -> {
+            MenuItem menuItem = (MenuItem) adapterView.getItemAtPosition(i);
+
+            itemDetailIntent.putExtra("detailName", menuItem.getName());
+            itemDetailIntent.putExtra("detailPrice", menuItem.getPrice());
+            itemDetailIntent.putExtra("detailCalories", menuItem.getCalories());
+
+            startActivity(itemDetailIntent);
+        });
+
     }
 }

@@ -26,6 +26,10 @@ public class MenuItemRestAdapter {
        return menuItemClient.getAllMenuItems();
    }
 
+   public Observable<List<MenuItem>> searchForMenuItems(String param) {
+       return menuItemClient.searchForMenuItems(param);
+   }
+
    public void createMenuItem(MenuItem menuItem) {
        menuItemClient.createMenuItem(menuItem)
                .subscribeOn(Schedulers.io())

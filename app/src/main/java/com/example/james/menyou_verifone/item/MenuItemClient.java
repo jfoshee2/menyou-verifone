@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Interface to make REST API calls
@@ -18,6 +19,9 @@ public interface MenuItemClient {
 
     @GET("api/items")
     Observable<List<MenuItem>> getAllMenuItems();
+
+    @GET("api/search")
+    Observable<List<MenuItem>> searchForMenuItems(@Query("q") String param);
 
     @POST("api/items")
     Observable<MenuItem> createMenuItem(@Body MenuItem item);
