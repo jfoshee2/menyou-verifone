@@ -6,15 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.example.james.menyou_verifone.MainActivity">
 
-    <ListView
+    <!--<ListView
         android:id="@+id/menuListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" />
+
+    <GridView
+        android:id="@+id/GridViewID"
+        android:layout_width="1234dp"
+        android:layout_height="612dp"
+        android:layout_gravity="bottom" />
 
 </FrameLayout>
