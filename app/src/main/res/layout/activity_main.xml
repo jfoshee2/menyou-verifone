@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.james.menyou_verifone.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Item" />
+
+        <Button
+            android:id="@+id/order_activity_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Orders" />
+    </android.support.v7.widget.Toolbar>
 
     <!--<ListView
         android:id="@+id/menuListView"
@@ -13,20 +35,19 @@
 
     <SearchView
         android:id="@+id/search"
+        android:layout_below="@id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="top" />
+        android:layout_gravity="top" >
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" />
+    </SearchView>
 
     <GridView
         android:id="@+id/grid_view"
+        android:layout_below="@id/search"
         android:layout_width="1234dp"
         android:layout_height="612dp"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom" >
+    </GridView>
 
-</FrameLayout>
+</RelativeLayout>

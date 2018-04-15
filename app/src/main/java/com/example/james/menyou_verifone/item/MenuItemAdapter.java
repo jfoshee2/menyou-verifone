@@ -38,6 +38,9 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
         TextView itemName = customView.findViewById(R.id.itemName);
         itemName.setText(singleMenuItem != null ? singleMenuItem.getName() : null);
 
+        TextView itemPrice = customView.findViewById(R.id.item_price);
+        itemPrice.setText(singleMenuItem != null ? singleMenuItem.getPrice() + "" : null);
+
         return customView;
     }
 }

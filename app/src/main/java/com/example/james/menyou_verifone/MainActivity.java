@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 
@@ -12,7 +14,10 @@ import com.example.james.menyou_verifone.item.MenuItem;
 import com.example.james.menyou_verifone.item.MenuItemAdapter;
 import com.example.james.menyou_verifone.item.MenuItemDetailActivity;
 import com.example.james.menyou_verifone.item.MenuItemRestAdapter;
+import com.example.james.menyou_verifone.order.MainOrderActivity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,8 +27,7 @@ public class MainActivity extends Activity {
 
     private Intent itemDetailIntent;
     private Intent createItemIntent;
-
-    private GridView menuGridView;
+    private Intent orderIntent;
 
     private MenuItemRestAdapter menuItemRestAdapter;
 
@@ -34,8 +38,7 @@ public class MainActivity extends Activity {
 
         itemDetailIntent = new Intent(this, MenuItemDetailActivity.class);
         createItemIntent = new Intent(this, CreateMenuItemActivity.class);
-
-        menuGridView = findViewById(R.id.grid_view);
+        orderIntent = new Intent(this, MainOrderActivity.class);
 
         ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
         menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
@@ -65,9 +68,12 @@ public class MainActivity extends Activity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::adaptListView);
 
-        FloatingActionButton createNewItemButton = findViewById(R.id.fab);
+        Button createNewItemButton = findViewById(R.id.button);
+        Button ordersActivityButton = findViewById(R.id.order_activity_button);
 
         createNewItemButton.setOnClickListener(view -> startActivity(createItemIntent));
+        ordersActivityButton.setOnClickListener(view -> startActivityForResult(
+                orderIntent, 1));
     }
 
     private void adaptListView(List<MenuItem> list) {
@@ -78,9 +84,14 @@ public class MainActivity extends Activity {
         menuGridView.setOnItemClickListener((adapterView, view, i, l) -> {
             MenuItem menuItem = (MenuItem) adapterView.getItemAtPosition(i);
 
-            itemDetailIntent.putExtra("detailName", menuItem.getName());
-            itemDetailIntent.putExtra("detailPrice", menuItem.getPrice());
-            itemDetailIntent.putExtra("detailCalories", menuItem.getCalories());
+            ArrayList<MenuItem> singletonMenuItem = new ArrayList<>();
+            singletonMenuItem.add(menuItem);
+
+            itemDetailIntent.putParcelableArrayListExtra("itemSingleton", singletonMenuItem);
+
+//            itemDetailIntent.putExtra("detailName", menuItem.getName());
+//            itemDetailIntent.putExtra("detailPrice", menuItem.getPrice());
+//            itemDetailIntent.putExtra("detailCalories", menuItem.getCalories());
 
             startActivity(itemDetailIntent);
         });

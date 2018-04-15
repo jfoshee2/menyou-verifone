@@ -30,5 +30,5 @@ public interface MenuItemClient {
     Call<MenuItem> editMenuItem(@Path("id") int id, @Body MenuItem item);
 
     @DELETE("api/items/{id}")
-    Call<MenuItem> deleteMenuItem(@Path("id") int id);
+    Observable<MenuItem> deleteMenuItem(@Path("id") int id);
 }

@@ -22,6 +22,10 @@
         <activity android:name=".item.CreateMenuItemActivity" />
         <activity android:name=".item.MenuItemDetailActivity" />
 
+        <activity android:name=".order.MainOrderActivity" />
+        <activity android:name=".order.CreateOrderActivity" />
+        <activity android:name=".order.OrderDetailActivity" />
+
     </application>
 
 </manifest>

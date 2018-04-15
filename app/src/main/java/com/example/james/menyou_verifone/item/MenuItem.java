@@ -1,5 +1,8 @@
 package com.example.james.menyou_verifone.item;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,7 +13,7 @@ import javax.annotation.Generated;
  * Object class for JSON mapping
  */
 @Generated("org.jsonschema2pojo")
-public class MenuItem {
+public class MenuItem implements Parcelable {
 
     @SerializedName("ID")
     private int id;
@@ -38,6 +41,26 @@ public class MenuItem {
         this.calories = builder.calories;
     }
 
+    protected MenuItem(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        ingredients = in.createStringArrayList();
+        price = in.readDouble();
+        calories = in.readInt();
+    }
+
+    public static final Creator<MenuItem> CREATOR = new Creator<MenuItem>() {
+        @Override
+        public MenuItem createFromParcel(Parcel in) {
+            return new MenuItem(in);
+        }
+
+        @Override
+        public MenuItem[] newArray(int size) {
+            return new MenuItem[size];
+        }
+    };
+
     public int getId() {
         return id;
     }
@@ -56,6 +79,20 @@ public class MenuItem {
 
     public int getCalories() {
         return calories;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeList(ingredients);
+        parcel.writeDouble(price);
+        parcel.writeInt(calories);
     }
 
     public static class MenuItemBuilder {

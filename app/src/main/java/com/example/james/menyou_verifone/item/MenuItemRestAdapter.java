@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -32,6 +33,13 @@ public class MenuItemRestAdapter {
 
    public void createMenuItem(MenuItem menuItem) {
        menuItemClient.createMenuItem(menuItem)
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread())
+               .subscribe();
+   }
+
+   public void deleteMenuItem(int id) {
+       menuItemClient.deleteMenuItem(id)
                .subscribeOn(Schedulers.io())
                .observeOn(AndroidSchedulers.mainThread())
                .subscribe();
