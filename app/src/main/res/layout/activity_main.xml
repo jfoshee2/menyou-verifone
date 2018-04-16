@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.james.menyou_verifone.MainActivity">
+    tools:context="com.example.james.menyou_verifone.MainActivity"
+    android:background="@drawable/wood_bg">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -38,16 +39,19 @@
         android:layout_below="@id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="top" >
+        android:layout_gravity="top">
 
     </SearchView>
 
     <GridView
         android:id="@+id/grid_view"
-        android:layout_below="@id/search"
-        android:layout_width="1234dp"
+        android:layout_width="match_parent"
         android:layout_height="612dp"
-        android:layout_gravity="bottom" >
-    </GridView>
+        android:layout_below="@id/search"
+        android:layout_gravity="bottom"
+        android:columnWidth="100dp"
+        android:horizontalSpacing="20dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"/>
 
 </RelativeLayout>

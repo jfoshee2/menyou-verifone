@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.james.menyou_verifone.R;
@@ -38,8 +39,11 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
         TextView itemName = customView.findViewById(R.id.itemName);
         itemName.setText(singleMenuItem != null ? singleMenuItem.getName() : null);
 
-        TextView itemPrice = customView.findViewById(R.id.item_price);
-        itemPrice.setText(singleMenuItem != null ? singleMenuItem.getPrice() + "" : null);
+        //TextView itemPrice = customView.findViewById(R.id.item_price);
+        //itemPrice.setText(singleMenuItem != null ? singleMenuItem.getPrice() + "" : null);
+
+        ImageView imageView = customView.findViewById(R.id.item_image);
+        imageView.setImageResource(R.drawable.burger);
 
         return customView;
     }

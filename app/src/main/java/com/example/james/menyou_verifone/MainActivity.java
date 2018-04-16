@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -43,7 +45,6 @@ public class MainActivity extends Activity {
 
         ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
         menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
-
 
         SearchView searchView = findViewById(R.id.search);
 
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
         GridView menuGridView = findViewById(R.id.grid_view);
 
         menuGridView.setAdapter(new MenuItemAdapter(MainActivity.this, list));
+
         menuGridView.setOnItemClickListener((adapterView, view, i, l) -> {
             MenuItem menuItem = (MenuItem) adapterView.getItemAtPosition(i);
 
