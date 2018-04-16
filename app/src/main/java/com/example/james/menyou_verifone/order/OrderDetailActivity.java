@@ -3,6 +3,7 @@ package com.example.james.menyou_verifone.order;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.james.menyou_verifone.R;
 import com.example.james.menyou_verifone.item.MenuItem;
@@ -24,11 +25,13 @@ public class OrderDetailActivity extends AppCompatActivity {
         Order order = singletonOrder.get(0); // There should only be one order
 
         List<MenuItem> menuItems = order.getMenuItems();
-
         ListView listView = findViewById(R.id.order_items);
 
         listView.setAdapter(new MenuItemAdapter(this, menuItems));
 
+        TextView priceTextView = findViewById(R.id.order_price);
 
+        String priceText = order.getTotal() + "";
+        priceTextView.setText(priceText);
     }
 }

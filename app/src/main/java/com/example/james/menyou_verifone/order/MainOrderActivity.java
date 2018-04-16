@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.james.menyou_verifone.R;
+import com.example.james.menyou_verifone.item.MenuItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -93,12 +94,15 @@ public class MainOrderActivity extends AppCompatActivity {
 
                 startActivity(orderDetailIntent);
             } else if (previousComponentName.getClassName().equals(ITEM_DETAIL_ACTIVITY_NAME)) {
-                System.out.println("hello there");
+                ArrayList<MenuItem> itemSingleton = getIntent()
+                        .getParcelableArrayListExtra("itemSingleton");
+
+                MenuItem singleMenuItem = itemSingleton.get(0);
+
+                order.addMenuItem(singleMenuItem);
+                System.out.println(orders);
             }
         });
-
-
-        // displayData();
     }
 
     @Override

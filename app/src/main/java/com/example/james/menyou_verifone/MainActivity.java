@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -53,12 +54,19 @@ public class MainActivity extends Activity {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(list -> adaptListView(list));
-
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+
+                if (s.isEmpty()) {
+                    menuItemRestAdapter.getAllMenuItems()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(list -> adaptListView(list));
+                }
+
                 return false; // TODO: Implement Suggest feature
             }
         });
@@ -89,12 +97,7 @@ public class MainActivity extends Activity {
 
             itemDetailIntent.putParcelableArrayListExtra("itemSingleton", singletonMenuItem);
 
-//            itemDetailIntent.putExtra("detailName", menuItem.getName());
-//            itemDetailIntent.putExtra("detailPrice", menuItem.getPrice());
-//            itemDetailIntent.putExtra("detailCalories", menuItem.getCalories());
-
             startActivity(itemDetailIntent);
         });
-
     }
 }
