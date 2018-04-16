@@ -3,14 +3,15 @@ package com.example.james.menyou_verifone;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 
+import com.example.james.menyou_verifone.filter.FilterFragment;
 import com.example.james.menyou_verifone.item.CreateMenuItemActivity;
 import com.example.james.menyou_verifone.item.MenuItem;
 import com.example.james.menyou_verifone.item.MenuItemAdapter;
@@ -19,30 +20,31 @@ import com.example.james.menyou_verifone.item.MenuItemRestAdapter;
 import com.example.james.menyou_verifone.order.MainOrderActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     private Intent itemDetailIntent;
     private Intent createItemIntent;
     private Intent orderIntent;
+    private FragmentManager fragmentManager;
+    private FilterFragment filterFragment;
 
     private MenuItemRestAdapter menuItemRestAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        fragmentManager = getSupportFragmentManager();
 
         itemDetailIntent = new Intent(this, MenuItemDetailActivity.class);
         createItemIntent = new Intent(this, CreateMenuItemActivity.class);
         orderIntent = new Intent(this, MainOrderActivity.class);
-
         ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
         menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
 
@@ -85,11 +87,16 @@ public class MainActivity extends Activity {
                 orderIntent, 1));
     }
 
-    private void adaptListView(List<MenuItem> list) {
+    public void adaptListView(List<MenuItem> list) {
 
         GridView menuGridView = findViewById(R.id.grid_view);
 
         menuGridView.setAdapter(new MenuItemAdapter(MainActivity.this, list));
+
+        filterFragment = (FilterFragment) fragmentManager.findFragmentById(R.id.filterFragment);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("currentDisplayedItems",(ArrayList<? extends Parcelable>) list);
+        filterFragment.updateDisplayedItems(bundle);
 
         menuGridView.setOnItemClickListener((adapterView, view, i, l) -> {
             MenuItem menuItem = (MenuItem) adapterView.getItemAtPosition(i);

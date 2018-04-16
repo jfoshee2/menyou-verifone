@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.james.menyou_verifone.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -33,20 +33,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />-->
 
-    <SearchView
-        android:id="@+id/search"
-        android:layout_below="@id/my_toolbar"
+    <LinearLayout
+        android:id="@+id/searchToolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="top">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_toolbar">
 
-    </SearchView>
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_weight=".9"
+            android:layout_height="50dp"
+            android:layout_gravity="top">
+
+        </SearchView>
+        <Button
+            android:id="@+id/filterToggle"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight=".1"
+            android:text="Filter Grid"
+            />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/filterFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchToolbar"
+        android:visibility="gone"
+        class="com.example.james.menyou_verifone.filter.FilterFragment"
+        tools:layout="@layout/filter_fragment">
+    </fragment>
 
     <GridView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="612dp"
-        android:layout_below="@id/search"
+        android:layout_below="@id/filterFragment"
         android:layout_gravity="bottom"
         android:columnWidth="100dp"
         android:horizontalSpacing="20dp"

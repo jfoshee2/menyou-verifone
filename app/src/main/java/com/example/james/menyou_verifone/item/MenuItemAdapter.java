@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.james.menyou_verifone.R;
+import com.example.james.menyou_verifone.filter.FilterFragment;
 
 import java.util.List;
 
@@ -19,10 +20,12 @@ import java.util.List;
 
 public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
 
+    private FilterFragment filterFragment;
+
     public MenuItemAdapter(
             @NonNull Context context,
             @NonNull List<MenuItem> objects
-    ) {
+            ) {
         super(context, R.layout.item_row, objects);
     }
 

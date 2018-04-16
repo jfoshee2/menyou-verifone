@@ -5,8 +5,18 @@
     <string name="text_hint_price">Item Price</string>
     <string name="text_hint_calories">Item Calories</string>
 
+    <!--Filter Strings-->
+    <string name="filter_grid">Filter</string>
+    <string name="close_filter">Close</string>
+    <string name="clear_all">Clear all</string>
+    <string name="add_filter">Add filter</string>
+    <string name="apply_filter">Apply filters</string>
+    <string name="filter_header">Filter by Ingredient:</string>
+    <string name="filter_auto_hint">Type for suggestions</string>
+
     <string-array name="menu_item_options">
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
+    <string name="title_activity_filter">FilterActivity</string>
 </resources>
