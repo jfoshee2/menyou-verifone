@@ -13,6 +13,10 @@ import com.example.james.menyou_verifone.R;
 import com.example.james.menyou_verifone.order.MainOrderActivity;
 
 import java.util.ArrayList;
+import java.util.Observable;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Activity for the MenuItem instance details
@@ -30,6 +34,9 @@ public class MenuItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_detail);
 
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
+        MenuItemRestAdapter menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
+
         main = new Intent(this, MainActivity.class);
         orderActivity = new Intent(this, MainOrderActivity.class);
 
@@ -41,24 +48,32 @@ public class MenuItemDetailActivity extends AppCompatActivity {
         Button addToOrderButton = findViewById(R.id.add_to_order_button);
 
         ArrayList<MenuItem> singletonMenuItem = getIntent()
-                .getParcelableArrayListExtra("itemSingleton");
+                .getParcelableArrayListExtra("singleMenuItem");
+
+        int id = getIntent().getIntExtra("menuItemId", 0);
+
+        menuItemRestAdapter.getMenuItemById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(menuItem1 -> {
+                    itemDetailNameView.setText(menuItem1.getName());
+
+                    String priceString = menuItem1.getPrice() + "";
+                    itemDetailPriceView.setText(priceString);
+
+                    String calorieString = menuItem1.getCalories() + "";
+                    itemDetailCaloriesView.setText(calorieString);
+                });
+
 
         menuItem = singletonMenuItem.get(0); // There should only be one element
 
-        itemDetailNameView.setText(menuItem.getName());
-
-        String priceString = menuItem.getPrice() + "";
-        itemDetailPriceView.setText(priceString);
-
-        String calorieString = menuItem.getCalories() + "";
-        itemDetailCaloriesView.setText(calorieString);
-
         deleteButton.setOnClickListener(view -> {
-            ApplicationComponent applicationComponent = DaggerApplicationComponent
-                    .builder()
-                    .build();
-
-            MenuItemRestAdapter menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
+//            applicationComponent = DaggerApplicationComponent
+//                    .builder()
+//                    .build();
+//
+//            MenuItemRestAdapter menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
             menuItemRestAdapter.deleteMenuItem(menuItem.getId());
             startActivity(main);
         });

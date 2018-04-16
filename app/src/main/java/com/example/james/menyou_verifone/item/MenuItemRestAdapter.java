@@ -27,6 +27,10 @@ public class MenuItemRestAdapter {
        return menuItemClient.getAllMenuItems();
    }
 
+   public Observable<MenuItem> getMenuItemById(int id) {
+       return menuItemClient.getMenuItemById(id);
+   }
+
    public Observable<List<MenuItem>> searchForMenuItems(String param) {
        return menuItemClient.searchForMenuItems(param);
    }

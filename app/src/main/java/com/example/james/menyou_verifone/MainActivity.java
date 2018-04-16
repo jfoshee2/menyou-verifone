@@ -95,7 +95,13 @@ public class MainActivity extends Activity {
             ArrayList<MenuItem> singletonMenuItem = new ArrayList<>();
             singletonMenuItem.add(menuItem);
 
-            itemDetailIntent.putParcelableArrayListExtra("itemSingleton", singletonMenuItem);
+            // System.out.println("\t\t\t\t" + menuItem.getId());
+
+            // System.out.println(singletonMenuItem.get(0).getPrice() + "\t\t\t\t\t" + singletonMenuItem.get(0).getCalories());
+
+            itemDetailIntent.putExtra("menuItemId", menuItem.getId());
+
+            itemDetailIntent.putParcelableArrayListExtra("singleMenuItem", singletonMenuItem);
 
             startActivity(itemDetailIntent);
         });

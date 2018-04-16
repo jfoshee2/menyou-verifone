@@ -1,5 +1,7 @@
 package com.example.james.menyou_verifone.item;
 
+import android.view.Menu;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -19,6 +21,9 @@ public interface MenuItemClient {
 
     @GET("api/items")
     Observable<List<MenuItem>> getAllMenuItems();
+
+    @GET("api/items/{id}")
+    Observable<MenuItem> getMenuItemById(@Path("id") int id);
 
     @GET("api/search")
     Observable<List<MenuItem>> searchForMenuItems(@Query("q") String param);
