@@ -8,7 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/text_hint_name"
-        android:inputType="text" />
+        android:textColorHint="@color/colorAccent"
+        android:inputType="text"
+        android:textColor="@color/colorAccent"/>
 
     <EditText
         android:id="@+id/itemCreateIngredients"
@@ -16,7 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/itemCreateName"
         android:hint="@string/text_hint_ingredients"
-        android:inputType="text" />
+        android:textColorHint="@color/colorAccent"
+        android:inputType="text"
+        android:textColor="@color/colorAccent"/>
 
     <EditText
         android:id="@+id/itemCreatePrice"
@@ -24,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/itemCreateIngredients"
         android:hint="@string/text_hint_price"
-        android:inputType="numberDecimal" />
+        android:textColorHint="@color/colorAccent"
+        android:inputType="numberDecimal"
+        android:textColor="@color/colorAccent"/>
 
     <EditText
         android:id="@+id/itemCreateCalories"
@@ -32,7 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/itemCreatePrice"
         android:hint="@string/text_hint_calories"
-        android:inputType="number" />
+        android:textColorHint="@color/colorAccent"
+        android:inputType="number"
+    android:textColor="@color/colorAccent"/>
 
     <Button
         android:id="@+id/itemCreateButton"
