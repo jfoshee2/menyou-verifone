@@ -1,23 +1,33 @@
 package com.example.james.menyou_verifone.order;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.james.menyou_verifone.R;
 import com.example.james.menyou_verifone.item.MenuItem;
 import com.example.james.menyou_verifone.item.MenuItemAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
+    Intent mainOrderIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_detail);
+
+        mainOrderIntent = new Intent(this, MainOrderActivity.class);
 
         ArrayList<Order> singletonOrder = getIntent()
                 .getParcelableArrayListExtra("orderSingleton");
@@ -31,7 +41,53 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         TextView priceTextView = findViewById(R.id.order_price);
 
+        Button payButton = findViewById(R.id.pay_button);
+
         String priceText = order.getTotal() + "";
         priceTextView.setText(priceText);
+
+
+        payButton.setOnClickListener(view -> {
+
+            SharedPreferences sharedPreferences = getSharedPreferences(
+                    "orders",
+                    Context.MODE_PRIVATE
+            );
+
+            String json = sharedPreferences.getString("ordersJson", "");
+
+            System.out.println("\t\t\t\t\t" + json);
+
+            Gson gson = new Gson();
+            if (!json.equals("")) {
+                List<Order> orders = gson.fromJson(json, new TypeToken<List<Order>>(){}.getType());
+                // adapter.notifyDataSetChanged();
+                orders.remove(findOrder(order.getOrderNumber(), orders));
+
+                System.out.println(gson.toJson(orders));
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("ordersJson", gson.toJson(orders));
+                editor.apply();
+            }
+
+            startActivity(mainOrderIntent);
+
+        });
+
+
     }
+
+    private int findOrder(int orderId, List<Order> orders) {
+        int result = 0;
+
+        for (int i = 0; i < orders.size(); i++) {
+            if (orderId == orders.get(i).getOrderNumber()) {
+                return i;
+            }
+        }
+
+        return result;
+    }
+
 }

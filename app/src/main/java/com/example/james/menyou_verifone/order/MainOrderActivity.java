@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.example.james.menyou_verifone.R;
 import com.example.james.menyou_verifone.item.MenuItem;
+import com.example.james.menyou_verifone.order.database.OrderDatabaseHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,6 +32,8 @@ public class MainOrderActivity extends AppCompatActivity {
     List<Order> orders;
     OrderAdapter adapter;
 
+    private OrderDatabaseHandler orderDatabaseHandler;
+
     private Intent orderDetailIntent;
 
     private ComponentName previousComponentName;
@@ -44,6 +47,8 @@ public class MainOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_list);
+
+        orderDatabaseHandler = new OrderDatabaseHandler(this, null);
 
         orderDetailIntent = new Intent(this, OrderDetailActivity.class);
 
@@ -63,6 +68,8 @@ public class MainOrderActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE
         );
 
+        // sharedPreferences.edit().clear().apply(); // just for now...
+
         String json = sharedPreferences.getString("ordersJson", "");
         Gson gson = new Gson();
         if (!json.equals("")) {
@@ -75,12 +82,23 @@ public class MainOrderActivity extends AppCompatActivity {
         }
 
         createOrderButton.setOnClickListener(view -> {
+//            orderDatabaseHandler.addOrder(
+//                    new Order(Integer.parseInt(orderNumberEditText.getText().toString()))
+//            );
+
+            // updateListView(); // make sure the data was added
+
+
+            ////////////////////Old using used preference /////////////////
             orders.add(new Order(Integer.parseInt(orderNumberEditText.getText().toString())));
             adapter.notifyDataSetChanged();
             orderNumberEditText.setText("");
         });
 
         orderListView.setOnItemClickListener((adapterView, view, i, l) -> {
+
+            saveInfo();
+
             Order order = (Order) adapterView.getItemAtPosition(i);
 
             if (previousComponentName.getClassName().equals(MAIN_ACTIVITY_NAME)) {
@@ -104,6 +122,12 @@ public class MainOrderActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void updateListView() {
+//        String dbString = orderDatabaseHandler.toString();
+//        // Print out string for now to confirm it works
+//        System.out.println(dbString);
+//    }
 
     @Override
     public void onBackPressed() {
