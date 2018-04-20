@@ -43,6 +43,7 @@ public class MenuItemDetailActivity extends AppCompatActivity {
         TextView itemDetailNameView = findViewById(R.id.itemDetailName);
         TextView itemDetailPriceView = findViewById(R.id.itemDetailPrice);
         TextView itemDetailCaloriesView = findViewById(R.id.itemDetailCalories);
+        TextView itemDetailsIngredientsView = findViewById(R.id.ingredientsDetails);
 
         Button deleteButton = findViewById(R.id.item_delete_button);
         Button addToOrderButton = findViewById(R.id.add_to_order_button);
@@ -63,6 +64,8 @@ public class MenuItemDetailActivity extends AppCompatActivity {
 
                     String calorieString = menuItem1.getCalories() + "";
                     itemDetailCaloriesView.setText(calorieString);
+
+                    itemDetailsIngredientsView.setText(menuItem1.getIngredients().toString());
                 });
 
 

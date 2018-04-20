@@ -4,47 +4,138 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
+
+    <Button
+        android:id="@+id/item_delete_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="63dp"
+        android:layout_marginTop="49dp"
+        android:layout_toStartOf="@+id/add_to_order_button"
+        android:text="Delete" />
+
+    <Button
+        android:id="@+id/add_to_order_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/item_delete_button"
+        android:layout_alignBottom="@+id/item_delete_button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="451dp"
+        android:text="Add to Order" />
+
+    <TextView
+        android:id="@+id/item_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/item_delete_button"
+        android:layout_below="@+id/item_delete_button"
+        android:layout_marginTop="39dp"
+        android:text="Item Name:"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/itemDetailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView" />
+        android:layout_alignStart="@+id/add_to_order_button"
+        android:layout_alignTop="@+id/item_name_label"
+        android:text="TextView"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/item_ingredient_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/item_name_label"
+        android:layout_below="@+id/item_name_label"
+        android:layout_marginTop="21dp"
+        android:text="Ingredients:"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ingredientsDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/itemDetailName"
+        android:layout_alignTop="@+id/item_ingredient_label"
+        android:text="TextView"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/item_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/item_ingredient_label"
+        android:layout_centerVertical="true"
+        android:text="Price:"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/itemDetailPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/itemDetailName"
-        android:layout_below="@+id/itemDetailName"
-        android:layout_marginTop="92dp"
-        android:text="TextView" />
+        android:layout_alignStart="@+id/ingredientsDetails"
+        android:layout_alignTop="@+id/item_price_label"
+        android:text="TextView"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/item_calories_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/item_price_label"
+        android:layout_below="@+id/item_price_label"
+        android:layout_marginTop="33dp"
+        android:text="Calories:"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/itemDetailCalories"
         android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        android:layout_alignBottom="@+id/itemDetailName"
-        android:layout_marginStart="65dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/item_calories_label"
+        android:layout_alignBottom="@+id/item_calories_label"
+        android:layout_alignStart="@+id/itemDetailPrice"
+        android:text="TextView"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp" />
+
+    <Switch
+        android:id="@+id/edit_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/add_to_order_button"
+        android:layout_marginStart="161dp"
         android:layout_toEndOf="@+id/itemDetailName"
-        android:text="TextView" />
+        android:textColor="@color/colorAccent"
+        android:textSize="20dp"
+        android:scaleX="2"
+        android:scaleY="2"/>
 
-    <Button
-        android:id="@+id/item_delete_button"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/edit_switch_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/itemDetailCalories"
-        android:text="Delete" />
+        android:layout_alignEnd="@+id/edit_switch"
+        android:layout_below="@+id/add_to_order_button"
+        android:text="Edit"
+        android:textSize="40dp"
+        android:textColor="@color/colorAccent"
+        />
 
-    <Button
-        android:id="@+id/add_to_order_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/item_delete_button"
-        android:text="Add to Order" />
 </RelativeLayout>
