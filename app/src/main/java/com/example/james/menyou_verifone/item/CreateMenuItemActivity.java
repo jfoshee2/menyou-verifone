@@ -3,6 +3,8 @@ package com.example.james.menyou_verifone.item;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,8 @@ public class CreateMenuItemActivity extends AppCompatActivity {
     EditText price;
     EditText calories;
 
+    Button createButton;
+
     Intent main;
 
     @Override
@@ -47,7 +51,29 @@ public class CreateMenuItemActivity extends AppCompatActivity {
 
         main = new Intent(this, MainActivity.class);
 
-        Button createButton = findViewById(R.id.itemCreateButton);
+        createButton = findViewById(R.id.itemCreateButton);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkFieldsForEmptyValues();
+            }
+        };
+
+        name.addTextChangedListener(textWatcher);
+        ingredients.addTextChangedListener(textWatcher);
+        price.addTextChangedListener(textWatcher);
+        calories.addTextChangedListener(textWatcher);
 
         createButton.setOnClickListener(view -> {
 
@@ -72,5 +98,15 @@ public class CreateMenuItemActivity extends AppCompatActivity {
             startActivity(main);
         });
 
+    }
+
+    private void checkFieldsForEmptyValues() {
+        if (name.getText().toString().isEmpty() || ingredients.getText().toString().isEmpty()
+                || price.getText().toString().isEmpty()
+                || calories.getText().toString().isEmpty()) {
+            createButton.setEnabled(false);
+        } else {
+            createButton.setEnabled(true);
+        }
     }
 }

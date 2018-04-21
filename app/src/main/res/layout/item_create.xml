@@ -40,13 +40,14 @@
         android:hint="@string/text_hint_calories"
         android:textColorHint="@color/colorAccent"
         android:inputType="number"
-    android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorAccent"/>
 
     <Button
         android:id="@+id/itemCreateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/itemCreateCalories"
+        android:enabled="false"
         android:text="Create Item" />
 
 </RelativeLayout>

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -80,6 +82,29 @@ public class MainOrderActivity extends AppCompatActivity {
             // adapter.notifyDataSetChanged();
             // System.out.println(orders);
         }
+
+        orderNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (charSequence.toString().isEmpty()) {
+                    createOrderButton.setEnabled(false);
+                } else {
+                    createOrderButton.setEnabled(true);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         createOrderButton.setOnClickListener(view -> {
 //            orderDatabaseHandler.addOrder(
@@ -163,20 +188,8 @@ public class MainOrderActivity extends AppCompatActivity {
             // adapter.notifyDataSetChanged();
             System.out.println(orders);
         }
-//        System.out.println(json); // This is to make sure we are retrieving the right data
 
     }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
-//
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            System.out.println("back key pressed");
-//            super.onBackPressed();
-//        }
-//
-//        return super.onKeyDown(keyCode, keyEvent);
-//    }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
