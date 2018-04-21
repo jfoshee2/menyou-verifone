@@ -42,6 +42,13 @@ public class MenuItemRestAdapter {
                .subscribe();
    }
 
+   public void editMenuItem(int id, MenuItem item) {
+       menuItemClient.editMenuItem(id, item)
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread())
+               .subscribe();
+   }
+
    public void deleteMenuItem(int id) {
        menuItemClient.deleteMenuItem(id)
                .subscribeOn(Schedulers.io())

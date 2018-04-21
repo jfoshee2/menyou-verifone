@@ -81,6 +81,26 @@ public class MenuItem implements Parcelable {
         return calories;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
     @Override
     public int describeContents() {
         return 0;
