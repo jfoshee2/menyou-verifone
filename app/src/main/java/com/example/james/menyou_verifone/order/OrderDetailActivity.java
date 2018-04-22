@@ -22,6 +22,9 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     Intent mainOrderIntent;
 
+    Order order;
+    List<Order> orders;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +32,24 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         mainOrderIntent = new Intent(this, MainOrderActivity.class);
 
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                "orders",
+                Context.MODE_PRIVATE
+        );
+
+        String json = sharedPreferences.getString("ordersJson", "");
+
+        Gson gson = new Gson();
+
+
         ArrayList<Order> singletonOrder = getIntent()
                 .getParcelableArrayListExtra("orderSingleton");
 
-        Order order = singletonOrder.get(0); // There should only be one order
+        order = singletonOrder.get(0); // There should only be one order
+
+        orders = gson.fromJson(json, new TypeToken<List<Order>>(){}.getType());
+
+        order = orders.get(findOrder(order.getOrderNumber(), orders));
 
         List<MenuItem> menuItems = order.getMenuItems();
         ListView listView = findViewById(R.id.order_items);
@@ -49,18 +66,12 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         payButton.setOnClickListener(view -> {
 
-            SharedPreferences sharedPreferences = getSharedPreferences(
-                    "orders",
-                    Context.MODE_PRIVATE
-            );
 
-            String json = sharedPreferences.getString("ordersJson", "");
 
             System.out.println("\t\t\t\t\t" + json);
 
-            Gson gson = new Gson();
             if (!json.equals("")) {
-                List<Order> orders = gson.fromJson(json, new TypeToken<List<Order>>(){}.getType());
+                orders = gson.fromJson(json, new TypeToken<List<Order>>(){}.getType());
                 // adapter.notifyDataSetChanged();
                 orders.remove(findOrder(order.getOrderNumber(), orders));
 

@@ -16,14 +16,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.james.menyou_verifone.ApplicationComponent;
+import com.example.james.menyou_verifone.DaggerApplicationComponent;
+import com.example.james.menyou_verifone.MainActivity;
 import com.example.james.menyou_verifone.R;
 import com.example.james.menyou_verifone.item.MenuItem;
+import com.example.james.menyou_verifone.item.MenuItemRestAdapter;
 import com.example.james.menyou_verifone.order.database.OrderDatabaseHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainOrderActivity extends AppCompatActivity {
 
@@ -37,6 +45,7 @@ public class MainOrderActivity extends AppCompatActivity {
     private OrderDatabaseHandler orderDatabaseHandler;
 
     private Intent orderDetailIntent;
+    private Intent main;
 
     private ComponentName previousComponentName;
 
@@ -53,6 +62,7 @@ public class MainOrderActivity extends AppCompatActivity {
         orderDatabaseHandler = new OrderDatabaseHandler(this, null);
 
         orderDetailIntent = new Intent(this, OrderDetailActivity.class);
+        main = new Intent(this, MainActivity.class);
 
         previousComponentName = getCallingActivity();
 
@@ -135,15 +145,34 @@ public class MainOrderActivity extends AppCompatActivity {
                 orderDetailIntent.putParcelableArrayListExtra("orderSingleton",
                         singletonOrder);
 
+                System.out.println(order.getOrderNumber());
+
                 startActivity(orderDetailIntent);
             } else if (previousComponentName.getClassName().equals(ITEM_DETAIL_ACTIVITY_NAME)) {
                 ArrayList<MenuItem> itemSingleton = getIntent()
                         .getParcelableArrayListExtra("itemSingleton");
 
-                MenuItem singleMenuItem = itemSingleton.get(0);
+                ApplicationComponent applicationComponent = DaggerApplicationComponent
+                        .builder()
+                        .build();
+                MenuItemRestAdapter menuItemRestAdapter = applicationComponent
+                        .getMenuItemRestAdapter();
 
-                order.addMenuItem(singleMenuItem);
-                System.out.println(orders);
+
+                menuItemRestAdapter.getMenuItemById(itemSingleton.get(0).getId())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(menuItem -> {
+                            order.addMenuItem(menuItem);
+                            System.out.println("hello world ");
+                            System.out.println("DEBUG" + order.getMenuItems().get(0).getCalories() + "\t" + order.getMenuItems().get(0).getName());
+                            orders.set(i, order);
+                            saveInfo();
+                            System.out.println(orders.get(0).getMenuItems().get(0).getCalories() + "\t" + orders.get(0).getMenuItems().get(0).getName());
+                        });
+
+                startActivity(main);
+
             }
         });
     }
