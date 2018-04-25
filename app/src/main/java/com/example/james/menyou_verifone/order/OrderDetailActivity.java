@@ -52,7 +52,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         order = orders.get(findOrder(order.getOrderNumber(), orders));
 
         List<MenuItem> menuItems = order.getMenuItems();
-        ListView listView = findViewById(R.id.order_items);
+        ListView listView = findViewById(R.id.order_list_items);
 
         listView.setAdapter(new MenuItemAdapter(this, menuItems));
 
