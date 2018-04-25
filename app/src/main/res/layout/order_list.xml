@@ -7,35 +7,61 @@
     android:layout_height="match_parent"
     tools:context="com.example.james.menyou_verifone.order.MainOrderActivity">
 
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <Button
+            android:id="@+id/create_orders"
+            android:layout_below="@id/order_number"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Create Order"/>
+
+        <Button
+            android:id="@+id/order_home_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Home" />
+
+    </android.support.v7.widget.Toolbar>
+
     <EditText
         android:id="@+id/order_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/my_toolbar"
         android:hint="Order Number"
         android:inputType="number"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="48dp"
         android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textColorHint="@color/colorAccent"/>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="48dp" />
 
-    <Button
-        android:id="@+id/create_orders"
-        android:layout_below="@id/order_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="Create Order"/>
 
     <ListView
         android:id="@+id/order_list"
-        android:layout_below="@id/create_orders"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/order_number"
+        android:layout_gravity="bottom"
         android:textColor="@color/colorAccent"
         android:textSize="40sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
 
     <!--<TextView-->
     <!--android:id="@+id/message"-->

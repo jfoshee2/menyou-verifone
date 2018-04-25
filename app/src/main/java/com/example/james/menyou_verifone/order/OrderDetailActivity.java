@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.james.menyou_verifone.MainActivity;
 import com.example.james.menyou_verifone.R;
 import com.example.james.menyou_verifone.item.MenuItem;
 import com.example.james.menyou_verifone.item.MenuItemAdapter;
@@ -21,7 +23,7 @@ import java.util.List;
 public class OrderDetailActivity extends AppCompatActivity {
 
     Intent mainOrderIntent;
-
+    Intent homeButtonIntent;
     Order order;
     List<Order> orders;
 
@@ -31,12 +33,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         setContentView(R.layout.order_detail);
 
         mainOrderIntent = new Intent(this, MainOrderActivity.class);
+        homeButtonIntent = new Intent(this, MainActivity.class);
 
         SharedPreferences sharedPreferences = getSharedPreferences(
                 "orders",
                 Context.MODE_PRIVATE
         );
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         String json = sharedPreferences.getString("ordersJson", "");
 
         Gson gson = new Gson();
@@ -59,10 +63,13 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView priceTextView = findViewById(R.id.order_price);
 
         Button payButton = findViewById(R.id.pay_button);
+        Button homeButton = findViewById(R.id.order_details_home_button);
 
         String priceText = order.getTotal() + "";
         priceTextView.setText(priceText);
 
+
+        homeButton.setOnClickListener(view -> startActivity(homeButtonIntent) );
 
         payButton.setOnClickListener(view -> {
 
