@@ -175,6 +175,16 @@ public class MainOrderActivity extends AppCompatActivity {
 
                 startActivity(main);
 
+            } else {
+                ArrayList<Order> singletonOrder = new ArrayList<>();
+                singletonOrder.add(order);
+
+                orderDetailIntent.putParcelableArrayListExtra("orderSingleton",
+                        singletonOrder);
+
+                System.out.println(order.getOrderNumber());
+
+                startActivity(orderDetailIntent);
             }
         });
     }
