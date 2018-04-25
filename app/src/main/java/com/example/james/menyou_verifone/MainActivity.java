@@ -32,6 +32,7 @@ public class MainActivity extends FragmentActivity {
     private Intent orderIntent;
     private FragmentManager fragmentManager;
     private FilterFragment filterFragment;
+    private Intent homeButtonIntent;
 
     private MenuItemRestAdapter menuItemRestAdapter;
 
@@ -45,6 +46,8 @@ public class MainActivity extends FragmentActivity {
         itemDetailIntent = new Intent(this, MenuItemDetailActivity.class);
         createItemIntent = new Intent(this, CreateMenuItemActivity.class);
         orderIntent = new Intent(this, MainOrderActivity.class);
+        homeButtonIntent = new Intent(this, MainActivity.class);
+
         ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
         menuItemRestAdapter = applicationComponent.getMenuItemRestAdapter();
 
@@ -81,7 +84,9 @@ public class MainActivity extends FragmentActivity {
 
         Button createNewItemButton = findViewById(R.id.button);
         Button ordersActivityButton = findViewById(R.id.order_activity_button);
+        Button homeButton = findViewById(R.id.home_screen_home_button);
 
+        homeButton.setOnClickListener(view -> startActivity(homeButtonIntent));
         createNewItemButton.setOnClickListener(view -> startActivity(createItemIntent));
         ordersActivityButton.setOnClickListener(view -> startActivityForResult(
                 orderIntent, 1));

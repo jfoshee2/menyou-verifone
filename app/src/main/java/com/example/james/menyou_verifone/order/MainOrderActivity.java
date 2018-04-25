@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +70,7 @@ public class MainOrderActivity extends AppCompatActivity {
         orderNumberEditText = findViewById(R.id.order_number);
         createOrderButton = findViewById(R.id.create_orders);
         orderListView = findViewById(R.id.order_list);
+        Button homeButton = findViewById(R.id.order_home_button);
 
         orders = new ArrayList<>();
 
@@ -79,9 +81,9 @@ public class MainOrderActivity extends AppCompatActivity {
                 "orders",
                 Context.MODE_PRIVATE
         );
-
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // sharedPreferences.edit().clear().apply(); // just for now...
-
+        homeButton.setOnClickListener(view -> startActivity(main));
         String json = sharedPreferences.getString("ordersJson", "");
         Gson gson = new Gson();
         if (!json.equals("")) {

@@ -34,6 +34,7 @@ public class MenuItemDetailActivity extends AppCompatActivity {
 
     Intent main;
     Intent orderActivity;
+    Intent homeActivity;
 
     MenuItem menuItem; // single menu item that has all details info
 
@@ -46,6 +47,7 @@ public class MenuItemDetailActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         main = new Intent(this, MainActivity.class);
         orderActivity = new Intent(this, MainOrderActivity.class);
+        homeActivity = new Intent(this, MainActivity.class);
 
         EditText itemDetailNameView = findViewById(R.id.itemDetailName);
         EditText itemDetailPriceView = findViewById(R.id.itemDetailPrice);
@@ -54,6 +56,7 @@ public class MenuItemDetailActivity extends AppCompatActivity {
 
         Button deleteButton = findViewById(R.id.item_delete_button);
         Button addToOrderButton = findViewById(R.id.add_to_order_button);
+        Button homeButton = findViewById(R.id.item_details_home_button);
 
         Switch editSwitch = findViewById(R.id.edit_switch);
 
@@ -62,6 +65,8 @@ public class MenuItemDetailActivity extends AppCompatActivity {
 
         int id = getIntent().getIntExtra("menuItemId", 0);
 
+
+        homeButton.setOnClickListener(view -> startActivity(homeActivity));
         menuItemRestAdapter.getMenuItemById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
