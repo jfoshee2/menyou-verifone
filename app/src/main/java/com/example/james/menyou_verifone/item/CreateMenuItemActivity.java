@@ -14,6 +14,7 @@ import com.example.james.menyou_verifone.ApplicationComponent;
 import com.example.james.menyou_verifone.DaggerApplicationComponent;
 import com.example.james.menyou_verifone.MainActivity;
 import com.example.james.menyou_verifone.R;
+import com.example.james.menyou_verifone.Util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,8 +78,11 @@ public class CreateMenuItemActivity extends AppCompatActivity {
 
         createButton.setOnClickListener(view -> {
 
-            String[] ingredientParts = ingredients.getText().toString().split(" ");
+            String[] ingredientParts = ingredients.getText().toString().split(",");
             List<String> itemIngredients = Arrays.asList(ingredientParts);
+
+           List<String> santizedList = Util.sanitizeList(itemIngredients);
+
 
             MenuItem item = new MenuItem(name.getText() + "",
                     itemIngredients,

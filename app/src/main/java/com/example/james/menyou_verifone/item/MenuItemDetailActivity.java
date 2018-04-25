@@ -14,6 +14,7 @@ import com.example.james.menyou_verifone.ApplicationComponent;
 import com.example.james.menyou_verifone.DaggerApplicationComponent;
 import com.example.james.menyou_verifone.MainActivity;
 import com.example.james.menyou_verifone.R;
+import com.example.james.menyou_verifone.Util;
 import com.example.james.menyou_verifone.order.MainOrderActivity;
 
 import java.sql.SQLOutput;
@@ -115,16 +116,18 @@ public class MenuItemDetailActivity extends AppCompatActivity {
 
                 menuItem.setName(itemDetailNameView.getText().toString());
 
-                String[] ingredientParts = itemDetailsIngredientsView.getText().toString().split(" ");
+                String[] ingredientParts = itemDetailsIngredientsView.getText().toString().split(",");
                 List<String> itemIngredients = Arrays.asList(ingredientParts);
 
-                menuItem.setIngredients(itemIngredients);
+
+                List<String> sanitizedList = Util.sanitizeList(itemIngredients);
+
+                menuItem.setIngredients(sanitizedList);
 
                 menuItem.setPrice(Double.parseDouble(itemDetailPriceView.getText().toString()));
 
                 menuItem.setCalories(Integer.parseInt(itemDetailCaloriesView.getText().toString()));
 
-                //System.out.println("I am bout to put this in the server: " + menuItem.toString());
                 menuItemRestAdapter.editMenuItem(menuItem.getId(), menuItem);
             }
 
