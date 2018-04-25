@@ -89,7 +89,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 editor.apply();
             }
 
-            startActivity(mainOrderIntent);
+            startActivityForResult(mainOrderIntent, 1);
 
         });
 
